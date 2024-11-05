@@ -18,9 +18,9 @@ services:
       - wp_data:containerPath:ro
   
   wordpress:
+    container_name: wp
     depends_on:
       - db
-    container_name: wp
     build: ./srcs/requirements/wordpress/Dockerfile
     restart: always
     networks:
@@ -46,6 +46,8 @@ networks:
 volumes:
   db_data:
   wp_data:
+
+#default volumes path: /var/lib/docker/volumes/
     
 # env_file:
 #   - path: ./srcs/.env

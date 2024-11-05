@@ -3,23 +3,49 @@ version: "3.7"
 
 services:
   nginx:
+    container_name: proxy_server
+    depends_on:
+      - wordpress
+      - db
     build: ./srcs/requirements/nginx/Dockerfile
     restart: always
+    ports:
+      - "433:433"
+      - "80:80" #TODO
+    networks:
+      - frontend
+    volumes:
+      - wp_data:containerPath:ro
   
   wordpress:
+    depends_on:
+      - db
+    container_name: wp
     build: ./srcs/requirements/wordpress/Dockerfile
     restart: always
-
+    networks:
+      - frontend
+      - backend
+    volumes:
+      -wp_data:containerPath:ro
 
   db:
+    container_name: mydb
     build: ./srcs/requirements/mariadb/Dockerfile
     restart: always
-
+    networks:
+      - backend
+    volumes:
+      - db_data:containerPath:ro
 
 networks:
   frontend:
     driver: bridge
+  backend:
 
-
-env_file:
-  - path: ./srcs/.env
+volumes:
+  db_data:
+  wp_data:
+    
+# env_file:
+#   - path: ./srcs/.env

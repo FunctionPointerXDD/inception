@@ -1,0 +1,13 @@
+.env
+.vim
+.ssh
+.vscode-server
+.bash_history
+.bash_logout
+.bashrc
+.lesshst
+.profile
+.sudo_as_admin_successful
+.viminfo
+.wget-hsts
+snap

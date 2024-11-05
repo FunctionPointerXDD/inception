@@ -1,11 +1,25 @@
 
-version: "3"
+version: "3.7"
 
 services:
   nginx:
+    build: ./srcs/requirements/nginx/Dockerfile
+    restart: always
   
-
   wordpress:
+    build: ./srcs/requirements/wordpress/Dockerfile
+    restart: always
 
 
   db:
+    build: ./srcs/requirements/mariadb/Dockerfile
+    restart: always
+
+
+networks:
+  frontend:
+    driver: bridge
+
+
+env_file:
+  - path: ./srcs/.env

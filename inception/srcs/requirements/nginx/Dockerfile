@@ -7,11 +7,11 @@ RUN chown -R www:www /var/lib/nginx
 RUN chown -R www:www /www
 
 #todo -> delete 80
-EXPOSE 80 443
+EXPOSE 80 443 
 
 #COPY -> release
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
-COPY ./tools/index.html /usr/share/nginx/html
+COPY ./tools/index.html /www
 
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
 

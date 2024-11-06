@@ -9,5 +9,7 @@
 .profile
 .sudo_as_admin_successful
 .viminfo
+.gitconfig
 .wget-hsts
+.cache/
 snap

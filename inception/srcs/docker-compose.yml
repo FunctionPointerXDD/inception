@@ -7,7 +7,7 @@ services:
     depends_on:
       - wordpress
       - db
-    build: ./srcs/requirements/nginx/Dockerfile
+    build: ./requirements/nginx/Dockerfile
     restart: always
     ports:
       - "443:443"
@@ -21,32 +21,26 @@ services:
     container_name: wp
     depends_on:
       - db
-    build: ./srcs/requirements/wordpress/Dockerfile
+    build: ./requirements/wordpress/Dockerfile
     restart: always
     networks:
       - frontend
       - backend
     volumes:
-      -wp_data:/var/www/html
-    environment:
-      - WORDPRESS_DB_HOST: $(WORDPRESS_DB_HOST)
-      - WORDPRESS_DB_USER: $(WORDPRESS_DB_USER)
-      - WORDPRESS_DB_PASSWORD: $(WORDPRESS_DB_PASSWORD)
-      - WORDPRESS_DB_NAME: $(WORDPRESS_DB_NAME)
+      - wp_data:/var/www/html
+    env_file:
+      - .env
 
   db:
     container_name: mydb
-    build: ./srcs/requirements/mariadb/Dockerfile
+    build: ./requirements/mariadb/Dockerfile
     restart: always
     networks:
       - backend
     volumes:
       - db_data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD: $(MYSQL_ROOT_PASSWORD)
-      - MYSQL_USER: $(MYSQL_USER)
-      - MYSQL_DATABASE: $(MYSQL_DATABASE)
-      - MYSQL_PASSWORD: $(MYSQL_PASSWORD)
+    env_file:
+      - .env
 
 networks:
   frontend:

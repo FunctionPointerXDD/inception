@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk update && apk add --no-cache mysql openrc && \
+RUN apk add --no-cache mysql mysql-client && \
     rm -f /var/cache/apk/*
 
 # make dir and authorize 
@@ -12,9 +12,9 @@ RUN apk update && apk add --no-cache mysql openrc && \
 
 
 # use "openrc" instead of systemd
-RUN mkdir -p /run/openrc && \
-    touch /run/openrc/softlevel && \
-    openrc
+# RUN mkdir -p /run/openrc && \
+#     touch /run/openrc/softlevel && \
+#     openrc
 
 # ENV INNODB_BUFFER_POOL_SIZE=256M
 
@@ -26,10 +26,15 @@ VOLUME [ "/var/lib/mysql" ]
 #open db port -> it is only connect docker network.
 EXPOSE 3306
 
+ENV MYSQL_ROOT_USER=root \
+    MYSQL_ROOT_PASSWORD=1234567890 \
+    MYSQL_USER=chansjeo \
+    MYSQL_PASSWORD=1234567890 \
+    MYSQL_DATABASE=wordpress_db
+
 #172.17.0.2
 # mysqld -> mariadb's daemon process ==> "root"
 # mysql ->  default user
 # --console ==> persist mysql on foreground && print db logs.
-ENTRYPOINT [ "/scripts/init_sql.sh" ]
 
-#CMD [ "mysqld", "--user=mysql", "--console" ]
+ENTRYPOINT [ "/scripts/init_sql.sh" ]

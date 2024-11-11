@@ -50,7 +50,7 @@ fi
 
 # "exec" : repalce init_sql.sh process to "mysqld" process (shell is over)
 # -> and running "mysqld" in foreground. (PID 1 is "mysqld")
-# -> mysqld process is well received by unix signal. (ex. docker stop, kill -9 pid)
+# -> mysqld process is well received by unix signal. (ex. docker stop)
 # -> There is no need "tini" or "dumb-init" process!
 # --console : logging to stdout
 exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0 $@

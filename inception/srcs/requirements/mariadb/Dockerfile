@@ -19,3 +19,5 @@ ENV MYSQL_ROOT_USER=root \
     MYSQL_DATABASE=wordpress_db
 
 ENTRYPOINT [ "/scripts/init_sql.sh" ]
+
+# ip: 172.17.0.2

@@ -48,8 +48,9 @@ rm -f $tfile
 
 fi
 
-# repalce init_sql.sh process to "mysqld" process (shell is over) and running "mysqld" in foreground.
-# set default user (mysql) 
+# "exec" : repalce init_sql.sh process to "mysqld" process (shell is over)
+# -> and running "mysqld" in foreground. (PID 1 is "mysqld")
+# -> There is no need "tini" or "dumb-init" process.
 # --console : logging to stdout
 
 exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0 $@

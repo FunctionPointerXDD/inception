@@ -1,5 +1,6 @@
 #!/bin/sh
 
+#create mysqld process directory -> use socket connecting
 if [ -d "/run/mysqld" ]; then
     echo "[i] mysqld already present, skipping creation"
     chown -R mysql:mysql /run/mysqld
@@ -9,6 +10,7 @@ else
     chown -R mysql:mysql /run/mysqld
 fi
 
+#create db directory
 if [ -d /var/lib/mysql/mysql ]; then
     echo "[i] MySQL directory already present, skipping creation"
     chown -R mysql:mysql /var/lib/mysql
@@ -19,8 +21,9 @@ else
 
     mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
 
+    # make tmp file for setting root id and password
     tfile=$(mktemp)
-    mysql -u $MYSQL_ROOT_USER <<EOF
+    cat << EOF > $tfile
 USE mysql;
 FLUSH PRIVILEGES;
 GRANT ALL ON *.* TO '$MYSQL_ROOT_USER'@'%' identified by '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION ;
@@ -30,19 +33,24 @@ DROP DATABASE IF EXISTS test ;
 FLUSH PRIVILEGES ;
 EOF
 
-mysql_secure_installation <<EOF
-y
-password
-password
-y
-y
-y
-y
-EOF
+#make init database and make user id and password
+echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE" >> $tfile
+echo "GRANT ALL ON $MYSQL_DATABASE.* to '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> $tfile
+
+# /usr/bin/mysqld : run mysqld process through "absolute path value"
+# --user=mysql : default user is mysql(not root) --> security purpose
+# --bootstrap : init database option (No actual running!)
+# --verbose=0 : minimize logs recording
+# --skip-name-resolve : ip address is not transefer to hostname. Only use ip address to connect 
+# --skip-networking=0 : allow external access to server (like "bind-address=0.0.0.0")
+/usr/bin/mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < $tfile
+rm -f $tfile
 
 fi
 
-sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
-sed -i "s|^skip-networking|#skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
+# repalce init_sql.sh process to "mysqld" process (shell is over) and running "mysqld" in foreground.
+# set default user (mysql) 
+# --console : logging to stdout
 
 exec /usr/bin/mysqld --user=mysql --console --skip-name-resolve --skip-networking=0 $@
+

@@ -12,7 +12,7 @@ VOLUME [ "/var/lib/mysql" ]
 #open db port -> it is only connect docker network.
 EXPOSE 3306
 
-ENV MYSQL_ROOT_USER=root \
+ENV MYSQL_ROOT_USER=chansjeo42 \
     MYSQL_ROOT_PASSWORD=1234567890 \
     MYSQL_USER=chansjeo \
     MYSQL_PASSWORD=1234567890 \

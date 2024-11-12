@@ -5,7 +5,7 @@ sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" /etc/php
 sed -i "s|;listen.mode\s*=\s*0660|listen.mode = ${PHP_FPM_LISTEN_MODE}|g" /etc/php82/php-fpm.d/www.conf && \
 sed -i "s|user\s*=\s*nobody|user = ${PHP_FPM_USER}|g" /etc/php82/php-fpm.d/www.conf && \
 sed -i "s|group\s*=\s*nobody|group = ${PHP_FPM_GROUP}|g" /etc/php82/php-fpm.d/www.conf && \
-sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" /etc/php82/php-fpm.d/www.conf #uncommenting line 
+sed -i "s|;log_level\s*=\s*notice|log_level = notice|g" /etc/php82/php-fpm.d/www.conf
 
 sed -i "s|display_errors\s*=\s*Off|display_errors = ${PHP_DISPLAY_ERRORS}|i" /etc/php82/php.ini && \
 sed -i "s|display_startup_errors\s*=\s*Off|display_startup_errors = ${PHP_DISPLAY_STARTUP_ERRORS}|i" /etc/php82/php.ini && \
@@ -20,6 +20,4 @@ sed -i 's/^listen = 127\.0\.0\.1:9000$/listen = 0.0.0.0:9000/' /etc/php82/php-fp
 
 #echo "<?php\n\tphpinfo();\n?>" > /www/phpinfo.php
 
-php-fpm82
-
-exec /usr/sbin/php-fpm82 --nodaemonize
+exec php-fpm82 --nodaemonize

@@ -3,11 +3,12 @@ FROM alpine:3.19
 RUN apk add --no-cache \
                 php82-fpm \
                 php82-mysqli \
-                php82 \
-                fcgi \
-                php82-cgi \
                 wget \
                 curl
+
+RUN adduser -D -g 'www' www && \
+    mkdir /www \
+    chown -R www:www /www
 
 ENV PHP_FPM_USER="www" \
     PHP_FPM_GROUP="www" \
@@ -20,15 +21,18 @@ ENV PHP_FPM_USER="www" \
     PHP_DISPLAY_STARTUP_ERRORS="On" \
     PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
     PHP_CGI_FIX_PATHINFO=0 \
-    WORDPRESS_DB_HOST=chansjeo42 \
+    WORDPRESS_DB_HOST=db:3306 \
     WORDPRESS_DB_USER=chansjeo \
     WORDPRESS_DB_PASSWORD=1234567890 \
     WORDPRESS_DB_NAME=wordpress_db
     
 ADD tools/init_php.sh /scripts/init_php.sh
-RUN chmod -R 755 /scripts 
+RUN chmod -R 755 /scripts
 
-STOPSIGNAL SIGQUIT
+#STOPSIGNAL SIGQUIT
 
 EXPOSE 9000
-ENTRYPOINT [ "/scripts/init_php.sh" ]
+
+VOLUME [ "/www" ]
+
+ENTRYPOINT [ "scripts/init_php.sh" ]

@@ -15,7 +15,7 @@ services:
     networks:
       - frontend
     volumes:
-      - wp_data:/www/html
+      - wp_data:/www
   
   wordpress:
     container_name: wp
@@ -27,7 +27,7 @@ services:
       - frontend
       - backend
     volumes:
-      - wp_data:/var/www/html
+      - wp_data:/www
     env_file:
       - .env
 

@@ -7,7 +7,7 @@ services:
     depends_on:
       - wp
       - db
-    build: requirements/nginx/Dockerfile
+    build: requirements/nginx
     restart: always
     ports:
       - "443:443"
@@ -21,7 +21,7 @@ services:
     container_name: mywp
     depends_on:
       - db
-    build: requirements/wordpress/Dockerfile
+    build: requirements/wordpress
     restart: always
     networks:
       - frontend
@@ -33,7 +33,7 @@ services:
 
   db:
     container_name: mydb
-    build: requirements/mariadb/Dockerfile
+    build: requirements/mariadb
     restart: always
     networks:
       - backend

@@ -2,10 +2,10 @@
 version: "3.7"
 
 services:
-  nginx:
-    container_name: proxy_server
+  proxy:
+    container_name: mynginx
     depends_on:
-      - wordpress
+      - wp
       - db
     build: requirements/nginx/Dockerfile
     restart: always
@@ -17,8 +17,8 @@ services:
     volumes:
       - wp_data:/www
   
-  wordpress:
-    container_name: wp
+  wp:
+    container_name: mywp
     depends_on:
       - db
     build: requirements/wordpress/Dockerfile

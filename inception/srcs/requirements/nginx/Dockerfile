@@ -13,6 +13,8 @@ EXPOSE 80 443
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./tools/index.html /www
 
+#VOLUME [ "/www" ]
+
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
 
 

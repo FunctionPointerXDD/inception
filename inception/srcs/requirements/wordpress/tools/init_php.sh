@@ -18,6 +18,6 @@ sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= ${PHP_CGI_FIX_PATHINFO}|i" /et
 
 sed -i 's/^listen = 127\.0\.0\.1:9000$/listen = 0.0.0.0:9000/' /etc/php82/php-fpm.d/www.conf
 
-#echo "<?php\n\tphpinfo();\n?>" > /www/phpinfo.php
+echo "<?php\n\tphpinfo();\n?>" > /www/wordpress/phpinfo.php
 
 exec php-fpm82 --nodaemonize

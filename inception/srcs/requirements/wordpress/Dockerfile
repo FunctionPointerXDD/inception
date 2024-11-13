@@ -7,8 +7,13 @@ RUN apk add --no-cache \
                 curl
 
 RUN adduser -D -g 'www' www && \
-    mkdir /www \
+    mkdir /www && \
     chown -R www:www /www
+
+RUN wget https://wordpress.org/wordpress-6.7.tar.gz && \
+    tar -xvf wordpress-6.7.tar.gz -C /www && \
+    chown -R www:www /www/wordpress && \ 
+    rm -rf /wordpress-6.7.tar.gz
 
 ENV PHP_FPM_USER="www" \
     PHP_FPM_GROUP="www" \
@@ -21,13 +26,14 @@ ENV PHP_FPM_USER="www" \
     PHP_DISPLAY_STARTUP_ERRORS="On" \
     PHP_ERROR_REPORTING="E_COMPILE_ERROR\|E_RECOVERABLE_ERROR\|E_ERROR\|E_CORE_ERROR" \
     PHP_CGI_FIX_PATHINFO=0 \
-    WORDPRESS_DB_HOST=db:3306 \
-    WORDPRESS_DB_USER=chansjeo \
-    WORDPRESS_DB_PASSWORD=1234567890 \
-    WORDPRESS_DB_NAME=wordpress_db
+    WORDPRESS_DB_HOST="db:3306" \
+    WORDPRESS_DB_USER="chansjeo" \
+    WORDPRESS_DB_PASSWORD="1234567890" \
+    WORDPRESS_DB_NAME="wordpress_db"
     
 ADD tools/init_php.sh /scripts/init_php.sh
 RUN chmod -R 755 /scripts
+COPY ./conf/wp-config.php /usr/wordpress
 
 #STOPSIGNAL SIGQUIT
 

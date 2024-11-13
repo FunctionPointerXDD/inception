@@ -11,7 +11,7 @@ EXPOSE 80 443
 
 #COPY -> release
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
-COPY ./tools/index.html /www/nginx
+COPY ./tools/index.html /www
 
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
 

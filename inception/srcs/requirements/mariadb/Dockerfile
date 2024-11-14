@@ -6,9 +6,6 @@ RUN apk add --no-cache mysql && \
 ADD tools/init_sql.sh /scripts/init_sql.sh
 RUN chmod -R 755 /scripts
 
-#mount 'host data dir path' to 'container data dir path'
-#VOLUME [ "/var/lib/mysql" ]
-
 #open db port -> it is only connect docker network.
 EXPOSE 3306
 

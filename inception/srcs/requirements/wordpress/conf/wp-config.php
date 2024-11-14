@@ -13,10 +13,14 @@ define( 'DB_PASSWORD', getenv('WORDPRESS_DB_PASSWORD') );
 /** Database hostname */
 define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
 
+$table_prefix = 'wp_';
+
+define ( 'WP_DEBUG', false);
+
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
-	define( 'ABSPATH', __DIR__ . '/' );
+	define( 'ABSPATH', dirname( __FILE__ ) . '/' );
 }
 
 /** Sets up WordPress vars and included files. */
-require_once ABSPATH . 'wp-settings.php';
+require_once( ABSPATH . 'wp-settings.php' );

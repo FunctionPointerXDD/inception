@@ -3,49 +3,42 @@ version: "3.7"
 
 services:
   proxy:
-    container_name: mynginx
     depends_on:
       - wp
       - db
     build: requirements/nginx
     restart: always
     ports:
-      - "443:443"
       - "80:80"
     networks:
-      - frontend
+      - my_net 
     volumes:
-      - wp_data:/www
+      - wp_data:/www/wordpress
   
   wp:
-    container_name: mywp
     depends_on:
       - db
     build: requirements/wordpress
     restart: always
     networks:
-      - frontend
-      - backend
+      - my_net 
     volumes:
-      - wp_data:/www
+      - wp_data:/www/wordpress
     env_file:
       - .env
 
   db:
-    container_name: mydb
     build: requirements/mariadb
     restart: always
     networks:
-      - backend
+      - my_net
     volumes:
       - db_data:/var/lib/mysql
     env_file:
       - .env
 
 networks:
-  frontend:
-    driver: bridge
-  backend:
+  my_net:
     driver: bridge
 
 volumes:

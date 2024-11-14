@@ -34,7 +34,6 @@ FLUSH PRIVILEGES ;
 EOF
 
 #make init database and make user id and password
-#echo "GRANT ALL ON *.* TO '$MYSQL_USER'@'%' identified by '$MYSQL_PASSWORD' WITH GRANT OPTION ;" >> $tfile
 echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" >> $tfile
 echo "GRANT ALL ON $MYSQL_DATABASE.* to '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> $tfile
 

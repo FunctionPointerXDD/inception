@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk add --no-cache mysql && \
+RUN apk add --no-cache mysql mysql-client && \
     rm -f /var/cache/apk/*
 
 ADD tools/init_sql.sh /scripts/init_sql.sh

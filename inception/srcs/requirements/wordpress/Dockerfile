@@ -21,14 +21,6 @@ RUN chmod -R 755 /scripts
 COPY ./conf/wp-config.php /www/wordpress/wp-config.php
 RUN chown -R www:www /www/wordpress && chmod -R 755 /www/wordpress
 
-RUN mkdir wp-content; \
-	for dir in /www/wordpress/wp-content/*/ cache; do \
-		dir="$(basename "${dir%/}")"; \
-		mkdir "wp-content/$dir"; \
-	done; \
-	chown -R www:www wp-content; \
-	chmod -R 1777 wp-content
-
 EXPOSE 9000
 
 ENTRYPOINT [ "/scripts/init_php.sh" ]

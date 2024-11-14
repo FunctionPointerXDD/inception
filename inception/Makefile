@@ -3,22 +3,20 @@ COMPOSE=docker compose
 
 COMPOSE_FILE=./srcs/docker-compose.yml
 
-CONTAINERS=$(shell docker ps -a -q)
-IMAGES=$(shell docker images -q)
-
 up :
 	$(COMPOSE) -f $(COMPOSE_FILE) up -d
 
 down :
-	$(COMPOSE) -f $(COMPOSE_FILE) down -v
+	$(COMPOSE) -f $(COMPOSE_FILE) down
 
 build :
 	$(COMPOSE) -f $(COMPOSE_FILE) build --no-cache
+	
+log:
+	$(COMPOSE) -f $(COMPOSE_FILE) logs 
 
 clean :
-	docker stop $(CONTAINERS)
-	docker rm $(CONTAINERS)
-	docker rmi $(IMAGES)
+	$(COMPOSE) -f $(COMPOSE_FILE) down -v
 	docker system prune -a --volumes 
 
-.PHONY: up down
+.PHONY: up down build clean log

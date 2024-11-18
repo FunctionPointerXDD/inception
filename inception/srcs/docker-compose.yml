@@ -9,11 +9,13 @@ services:
     build: requirements/nginx
     restart: always
     ports:
-      - "80:80"
+      - "443:443"
     networks:
       - my_net 
     volumes:
       - wp_data:/www/wordpress
+    env_file:
+      - .env
   
   wp:
     depends_on:
@@ -44,8 +46,3 @@ networks:
 volumes:
   db_data:
   wp_data:
-
-#default volumes path: /var/lib/docker/volumes/
-    
-# env_file:
-#   - path: ./srcs/.env

@@ -6,13 +6,13 @@ RUN mkdir -p /www && \
     chown -R www:www /var/lib/nginx /www && \
     chmod -R 755 /www
     
-EXPOSE 80 443 
-
 #COPY -> release
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./tools/index.html /www
 
-RUN mkdir scripts && chmod -R 755 /scripts
-ADD tools/init_nginx.sh /srcipts/init_nginx.sh
+ADD tools/init_nginx.sh /scripts/init_nginx.sh
+RUN chmod -R 755 /scripts
 
-ENTRYPOINT [ "srcipts/init_nginx.sh" ]
+EXPOSE 443 
+
+ENTRYPOINT [ "scripts/init_nginx.sh" ]

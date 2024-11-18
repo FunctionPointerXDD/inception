@@ -5,8 +5,8 @@ COMPOSE_FILE=./srcs/docker-compose.yml
 
 all : hosts build up
 
-hosts : 
-	sudo sed -i 's/localhost/chansjeo.42.fr/g' /etc/hosts	
+# hosts : 
+# 	sudo sed -i 's/localhost/chansjeo.42.fr/g' /etc/hosts	
 
 up :
 	$(COMPOSE) -f $(COMPOSE_FILE) up -d

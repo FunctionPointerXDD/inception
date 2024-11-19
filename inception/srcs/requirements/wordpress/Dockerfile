@@ -1,10 +1,9 @@
 FROM alpine:3.19
 
 RUN apk add --no-cache \
-                php82-fpm \
-                php82-mysqli \
-                wget \
-                curl
+                php82-fpm=8.2.20-r0 \
+                php82-mysqli=8.2.20-r0 \
+                wget=1.21.4-r0
 
 RUN adduser -D -g 'www' www && \
     mkdir /www && \

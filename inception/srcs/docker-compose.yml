@@ -41,7 +41,7 @@ services:
 
 networks:
   my_net:
-    driver: bridge
+    name: inception 
 
 volumes:
   db_data:

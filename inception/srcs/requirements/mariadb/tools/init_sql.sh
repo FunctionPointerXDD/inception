@@ -18,7 +18,7 @@ else
     echo "[i] MySQL data directory not found, creating initial DBs"
 
     chown -R mysql:mysql /var/lib/mysql
-
+    # init mysql_db
     mysql_install_db --user=mysql --ldata=/var/lib/mysql > /dev/null
 
     # make tmp file for setting root id and password

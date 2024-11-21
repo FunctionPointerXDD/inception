@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ -d "/www/wordpress" ]; then
+if [ -f "/www/wordpress/wp-config.php" ]; then
     echo "wordpress already present, skipping creation"
     adduser -D -g 'www' www
     chown -R www:www /www /www/wordpress

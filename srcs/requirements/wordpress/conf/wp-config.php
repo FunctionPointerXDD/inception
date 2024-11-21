@@ -15,7 +15,7 @@ define( 'DB_HOST', getenv('WORDPRESS_DB_HOST') );
 
 $table_prefix = 'wp_';
 
-define ( 'WP_DEBUG', false );
+define ( 'WP_DEBUG', true );
 
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {

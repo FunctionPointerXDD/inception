@@ -21,4 +21,20 @@ sed -i 's/^listen = 127\.0\.0\.1:9000$/listen = 0.0.0.0:9000/' /etc/php82/php-fp
 sed -i 's|;clear_env = no|clear_env = no|g' /etc/php82/php-fpm.d/www.conf
 echo "<?php phpinfo(); ?>" > /www/wordpress/phpinfo.php
 
-exec php-fpm82 --nodaemonize --allow-to-run-as-root
+sleep 10 
+
+wp core download --path=/www/wordpress
+
+#wp config create --dbname=wordpress_db --dbuser=chansjeo --dbpass=1234567890 --dbhost=db:3306 --path=/www/wordpress
+
+wp core install \
+    --url="https://${DOMAIN_NAME}" \
+    --title="Inception" \
+    --admin_user=${WORDPRESS_DB_ROOT_USER} \
+    --admin_password=${WORDPRESS_DB_ROOT_PASSWORD} \
+    --admin_email="asdf@asdf.com" \
+#    --path="/www/wordpress"
+
+wp user create ${WORDPRESS_DB_USER} user@example.com --role=editor --user_pass=${WORDPRESS_DB_PASSWORD}
+
+exec php-fpm82 --nodaemonize

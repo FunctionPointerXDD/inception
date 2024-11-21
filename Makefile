@@ -5,10 +5,9 @@ COMPOSE_FILE=./srcs/docker-compose.yml
 
 NETWORK=inception
 
-# hosts : 
-# 	sudo sed -i 's/localhost/chansjeo.42.fr/g' /etc/hosts	
+#init_db
 
-all : hosts build up
+all : build up
 
 re : down build up
 
@@ -36,5 +35,7 @@ net :
 clean :
 	$(COMPOSE) -f $(COMPOSE_FILE) down -v
 	docker system prune -a --volumes 
+	sudo rm -rf /home/chansjeo/data/mariadb/*
+	sudo rm -rf /home/chansjeo/data/wordpress/*
 
-.PHONY: up down build clean logs hosts net start stop re
+.PHONY: up down build clean logs net start stop re

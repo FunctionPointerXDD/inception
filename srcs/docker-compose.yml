@@ -45,4 +45,14 @@ networks:
 
 volumes:
   db_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/chansjeo/data/mariadb
+      o: bind
   wp_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/chansjeo/data/wordpress
+      o: bind

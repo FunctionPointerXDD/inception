@@ -1,17 +1,17 @@
 #!/bin/sh
-
 adduser -D -g 'www' www
 mkdir -p /www/wordpress
 chown -R www:www /www /www/wordpress
 chmod -R 755 /www /www/wordpress
 
+#wait mariadb setting...
+sleep 3
+
 cd /www/wordpress
 
 wp core download --allow-root
 
-mv /www/wordpress/wp-config-sample.php /www/wordpress/wp-config.php
-
-mv /wp-config.php /www/wordpress/wp-config.php
+wp config create --dbname=$WORDPRESS_DB_NAME --dbuser=$WORDPRESS_DB_USER --dbpass=$WORDPRESS_DB_PASSWORD --dbhost=$WORDPRESS_DB_HOST --allow-root
 
 wp core install \
     --url=$DOMAIN_NAME \
@@ -22,11 +22,9 @@ wp core install \
     --skip-email \
     --allow-root
 
-wp user create $WORDPRESS_DB_USER user@example.com --role=author --user_pass=$WORDPRESS_DB_PASSWORD --allow-root
+wp user create $WORDPRESS_DB_USER test@test.com --role=author --user_pass=$WORDPRESS_DB_PASSWORD --allow-root
 
-wp user session destroy $WORDPRESS_DB_ROOT_USER -all --allow-root
-
-wp cache flush --allow-root
+rm -f wp-config-sample.php
 
 sed -i "s|;listen.owner\s*=\s*nobody|listen.owner = ${PHP_FPM_USER}|g" /etc/php82/php-fpm.d/www.conf && \
 sed -i "s|;listen.group\s*=\s*nobody|listen.group = ${PHP_FPM_GROUP}|g" /etc/php82/php-fpm.d/www.conf && \
@@ -50,4 +48,4 @@ sed -i 's/^listen = 127\.0\.0\.1:9000$/listen = 0.0.0.0:9000/' /etc/php82/php-fp
 
 echo "<?php phpinfo(); ?>" > /www/wordpress/phpinfo.php
 
-exec php-fpm82 --nodaemonize
+exec /usr/sbin/php-fpm82 -FR

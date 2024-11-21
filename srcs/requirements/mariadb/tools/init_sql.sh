@@ -36,6 +36,7 @@ EOF
 #make init database and make user id and password
 echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" >> $tfile
 echo "GRANT ALL ON $MYSQL_DATABASE.* to '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" >> $tfile
+echo "FLUSH PRIVILEGES ;" >> $tfile
 
 # /usr/bin/mysqld : run mysqld process through "absolute path value"
 # --user=mysql : default user is mysql(not root) --> security purpose

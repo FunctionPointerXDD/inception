@@ -5,8 +5,6 @@ COMPOSE_FILE=./srcs/docker-compose.yml
 
 NETWORK=inception
 
-#init_db
-
 all : build up
 
 re : down build up

@@ -33,7 +33,13 @@ net :
 clean :
 	$(COMPOSE) -f $(COMPOSE_FILE) down -v
 	docker system prune -a --volumes 
+
+fclean : clean
 	sudo rm -rf /home/chansjeo/data/mariadb/*
 	sudo rm -rf /home/chansjeo/data/wordpress/*
 
-.PHONY: up down build clean logs net start stop re
+volume : 
+	mkdir -p /home/chansjeo/data/mariadb
+	mkdir -p /home/chansjeo/data/wordpress
+
+.PHONY: re up down build clean fclean logs net start stop volume

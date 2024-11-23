@@ -1,6 +1,6 @@
 FROM alpine:3.19
 
-RUN apk update && apk add nginx=1.24.0-r16 openssl=3.1.7-r1
+RUN apk update && apk add nginx openssl
 RUN adduser -D -g 'www' www
 RUN mkdir -p /www && \
     chown -R www:www /var/lib/nginx /www && \

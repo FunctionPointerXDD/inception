@@ -7,6 +7,7 @@ services:
       - wp
       - db
     build: requirements/nginx
+    image: nginx
     restart: always
     ports:
       - "443:443"
@@ -21,6 +22,7 @@ services:
     depends_on:
       - db
     build: requirements/wordpress
+    image: wordpress
     restart: always
     networks:
       - my_net 
@@ -31,6 +33,7 @@ services:
 
   db:
     build: requirements/mariadb
+    image: mariadb
     restart: always
     networks:
       - my_net
